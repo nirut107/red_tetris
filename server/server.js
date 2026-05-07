@@ -23,6 +23,7 @@ io.on("connection", (socket) => {
 
     const game = games.get(room);
     game.addPlayer(socket, name);
+    game.start();
   });
 
   socket.on("start_game", () => {

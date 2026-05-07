@@ -51,7 +51,7 @@ class Game {
     this.generatePieces();
 
     for (const player of this.players.values()) {
-      player.spawnPiece(this.nextPiece());
+      player.spawnPiece(this.nextPiece.bind(this));
     }
 
     this.interval = setInterval(() => this.tick(), 500);
