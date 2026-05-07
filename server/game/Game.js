@@ -22,6 +22,7 @@ class Game {
     socket.join(this.room);
 
     if (!this.host) this.host = socket.id;
+    if (this.running) player.spawnPiece(this.nextPiece.bind(this));
 
     this.broadcast();
   }
@@ -54,6 +55,8 @@ class Game {
       player.spawnPiece(this.nextPiece.bind(this));
     }
 
+    this.broadcast();
+
     this.interval = setInterval(() => this.tick(), 500);
   }
 
@@ -79,6 +82,7 @@ class Game {
     if (!player) return;
 
     player.handleInput(action);
+    this.broadcast();
   }
 
   broadcast() {

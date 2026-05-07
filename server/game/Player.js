@@ -34,13 +34,13 @@ class Player {
 
     switch (action) {
       case "left":
-        this.piece.x--;
+        this.move(-1, 0);
         break;
       case "right":
-        this.piece.x++;
+        this.move(1, 0);
         break;
       case "down":
-        this.piece.y++;
+        this.move(0, 1);
         break;
       case "rotate":
         // TODO rotation
@@ -51,6 +51,16 @@ class Player {
         }
         this.piece.y--;
         break;
+    }
+  }
+
+  move(dx, dy) {
+    this.piece.x += dx;
+    this.piece.y += dy;
+
+    if (collide(this.board, this.piece)) {
+      this.piece.x -= dx;
+      this.piece.y -= dy;
     }
   }
 

@@ -23,12 +23,11 @@ io.on("connection", (socket) => {
 
     const game = games.get(room);
     game.addPlayer(socket, name);
-    game.start();
   });
 
   socket.on("start_game", () => {
     const game = findGameBySocket(socket.id);
-    if (game) game.start();
+    if (game && game.host === socket.id) game.start();
   });
 
   socket.on("move_left", () => handleInput(socket, "left"));

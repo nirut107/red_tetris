@@ -4,12 +4,14 @@ import { socket } from "../socket";
 export default function useGameSocket() {
   const [gameState, setGameState] = useState(null);
   const [connected, setConnected] = useState(false);
+  const [socketId, setSocketId] = useState(null);
 
   useEffect(() => {
     socket.connect();
 
     socket.on("connect", () => {
       setConnected(true);
+      setSocketId(socket.id);
     });
 
     socket.on("game_state", (state) => {
@@ -18,6 +20,7 @@ export default function useGameSocket() {
 
     socket.on("disconnect", () => {
       setConnected(false);
+      setSocketId(null);
     });
 
     return () => {
@@ -42,6 +45,7 @@ export default function useGameSocket() {
   return {
     gameState,
     connected,
+    socketId,
     sendInput,
     joinGame,
     startGame,
