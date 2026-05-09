@@ -43,7 +43,8 @@ class Player {
         this.move(0, 1);
         break;
       case "rotate":
-        // TODO rotation
+        this.rotatePiece();
+        break;
         break;
       case "hard_drop":
         while (!collide(this.board, this.piece)) {
@@ -61,6 +62,20 @@ class Player {
     if (collide(this.board, this.piece)) {
       this.piece.x -= dx;
       this.piece.y -= dy;
+    }
+  }
+
+  rotatePiece() {
+    const originalMatrix = this.piece.matrix;
+
+    const rotatedMatrix = originalMatrix[0].map((val, index) =>
+      originalMatrix.map(row => row[index]).reverse()
+    );
+
+    this.piece.matrix = rotatedMatrix;
+
+    if (collide(this.board, this.piece)) {
+      this.piece.matrix = originalMatrix;
     }
   }
 
